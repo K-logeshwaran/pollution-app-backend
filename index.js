@@ -51,3 +51,9 @@ mongoose.connect(dbUrl)
     //console.log(res);
     app.listen(process.env.PORT || 5000);
 }).catch(err=>console.log(err));
+
+// function chekVerification(regx,value){
+//     console.log(regx.test(value));
+// }
+
+//chekVerification(/^(?:(?:\+|0{0,2})91(\s*[\-]\s*)?|[0]?)?[789]\d{9}$/,"88705152");

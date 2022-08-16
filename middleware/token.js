@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken");
 
+const secretKey = "kvdskmskldsklfdfmdklfmkldsmfkldsfmdksmfkldsfmkdlfmdjkhdyugqe635467tgregrgnejlgeijghneir hiuerh`";
+
 const verifyToken = (req, res, next) => {
     const token =
       req.body.token || req.query.token || req.headers["x-access-token"];
@@ -9,11 +11,12 @@ const verifyToken = (req, res, next) => {
     }
     try {
       //const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-      const decoded = jwt.verify(token, "ldsjnsdjfhdjfhhsdjfhuritu8934573rrhfwxubyrcrur9tih90yiijrjgnrfhwfwytrtwrvxcqd");
+      const decoded = jwt.verify(token,secretKey);
       console.log("decode is ");
       console.log(jwt.decode);
       req.user = decoded;
     } catch (err) {
+      console.log(err);
       return res.status(401).send("Invalid Token");
     }
     return next();

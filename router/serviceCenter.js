@@ -1,11 +1,23 @@
 const express = require("express");
+const multer = require("multer");
 const router = express.Router();
 const crypto=require('crypto');
 const {AddServiceCenter} = require("../db")
-router.get("/",(req,res)=>{
-    return res.send("hello form user");
+const File = require("../schema/file");
+const verifyToken = require("../middleware/token");
+const sercenSchema = require("../schema/serviceCenter.model");
+
+const upload = multer({dest:"uploads"});
+
+router.get("/",verifyToken,async (req,res)=>{
+    let user = req.user;
+    user = await  sercenSchema.findOne({email:req.user.email});
+    let {email,serCenName}= user;
+    return res.json({"status":200,"user":{email,serCenName}});
+    //return res.send(req.user);
 })
-const HashPass=(email,password)=>crypto.createHmac('sha256',email).update(password).digest('base64')
+const HashPass=(email,password)=>crypto.createHmac('sha256',email).update(password).digest('base64');
+
 router.post("/",async (req,res)=>{
     const data = req.body;
     console.log(data);
@@ -20,6 +32,19 @@ router.post("/",async (req,res)=>{
     }
     
     return res.json({"status":200,"message":result});
-})
+});
+
+router.post("/file",upload.single("file"),async (req,res)=>{
+    console.log(req.body)
+    console.log(req.file);
+    let send  = await File.create({
+        filename: req.file.originalname,
+        path:req.file.path,
+    })
+    console.log(send);
+    console.log(`${req.headers.origin}/file/${send._id}`);
+    return res.send("Success");
+});
+
 
 module.exports = router;

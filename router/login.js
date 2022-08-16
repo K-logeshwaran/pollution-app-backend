@@ -19,7 +19,7 @@ router.post('/user',(req,res)=>{
     userModel.findOne({email:req.body.email},(err,user)=>{
         if(err) return  res.status(500).send("Internal Server Error")
         console.log(user);
-        if(!user) return res.status(404).send("No User Found Please SignUp! a free account")
+        if(!user) return res.status(404).send(`No User found with the id  ${req.body.email} \n Please register an User account`)
         if(HashPass(req.body.email,req.body.password)===user.password){
             data ={
                 email:user.email,
@@ -28,7 +28,6 @@ router.post('/user',(req,res)=>{
             let token = jwt.sign(data,secretKey, {
                 expiresIn: "1d",
               });
-              
             res.json({token:token,type:"user"})
             console.log(data);
             console.log(token);
@@ -44,7 +43,7 @@ router.post('/rto',(req,res)=>{
     rtoModel.findOne({email:req.body.email},(err,user)=>{
         if(err) return  res.status(500).send("Internal Server Error")
         console.log(user);
-        if(!user) return res.status(404).send("No User Found Please SignUp! a free account")
+        if(!user) return res.status(404).send(`No RTO found with the id  ${req.body.email} \n Please register an RTO account`);
         if(HashPass(req.body.email,req.body.password)===user.password){
             data ={
                 email:user.email,
@@ -68,9 +67,9 @@ router.post('/sercen',(req,res)=>{
     console.log(req.body);
     let data;
     serCenModel.findOne({email:req.body.email},(err,user)=>{
-        if(err) return  res.status(500).send("Internal Server Error")
+        if(err) return  res.status(500).send("Internal Server Error");
         console.log(user);
-        if(!user) return res.status(404).send("No User Found Please SignUp! a free account")
+        if(!user) return res.status(404).send(`No Service Center found with the id  ${req.body.email} \n Please register a Service Center account`)
         if(HashPass(req.body.email,req.body.password)===user.password){
             data ={
                 email:user.email,
