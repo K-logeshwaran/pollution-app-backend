@@ -4,7 +4,7 @@ const mongoose = require("mongoose")
 const app = express()
 // const jwt = require('jsonwebtoken')
 
-const dbUrl = "mongodb://localhost:27017/Bhc-project"
+const dbUrl = "mongodb+srv://bhc:82u8OnGgaUq48KyS@pollutionapp.hzueuhd.mongodb.net/?retryWrites=true&w=majority"
 // routes
 const login = require("./router/login")
 // const verifyToken = require('./middleware/tokn')

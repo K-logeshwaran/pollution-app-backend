@@ -24,6 +24,17 @@ router.get("/",verifyToken,async (req,res)=>{
     return res.json({"status":200,"user":{email,vhcNo,name}});
 });
 
+
+router.put("/update",verifyToken,async (req,res)=>{
+    console.log(req.body);
+    console.log(req.user);
+    let user = await userModel.findOne({email:req.user.email})
+    user.name= req.body.name;
+    user.vhcNo = req.body.Vhcno
+    await user.save();
+    return res.send(user);
+});
+
 module.exports = router;
 
 // DOB: "2022-08-12T03:57:51.115Z"
