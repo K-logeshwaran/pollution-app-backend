@@ -43,7 +43,7 @@ router.post("/file",upload.single("file"),async (req,res)=>{
     })
     console.log(send);
     console.log(`${req.headers.origin}/file/${send._id}`);
-    return res.send("Success");
+    return res.send('<a href="http://localhost:8000/serviceCenterView"> Success click to go home </a>');
 });
 
 

@@ -46,6 +46,11 @@ const USER =  new Schema({
         type:String,
         required:true
     },
+    emission:{
+        required:true,
+        type:Number,
+        default:0
+    }
 })
 
 
