@@ -4,8 +4,8 @@ const mongoose = require("mongoose")
 const app = express()
 // const jwt = require('jsonwebtoken')
 
-const dbUrl = "mongodb+srv://bhc:82u8OnGgaUq48KyS@pollutionapp.hzueuhd.mongodb.net/?retryWrites=true&w=majority";
-//const dbUrl = "mongodb://localhost:27017/Bhc-project"
+//const dbUrl = "mongodb+srv://bhc:82u8OnGgaUq48KyS@pollutionapp.hzueuhd.mongodb.net/?retryWrites=true&w=majority";
+const dbUrl = "mongodb://localhost:27017/Bhc-project"
 // routes
 const login = require("./router/login")
 // const verifyToken = require('./middleware/tokn')
@@ -23,6 +23,13 @@ app.use("/user",user);
 app.use("/rto",rto);
 app.use("/serviceCenter",serviceCenter);
 app.use("/login",login)
+
+app.use(function(err, req, res, next) {
+    console.log('ERROR');
+    res.status(500);
+    res.end('');
+    console.error(err.stack);
+});
 
 app.get("/",(req,res)=>{
     return res.send("Hello")
