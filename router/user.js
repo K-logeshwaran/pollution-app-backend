@@ -25,8 +25,8 @@ router.post("/",async (req,res)=>{
 router.get("/",verifyToken,async (req,res)=>{
     let user = req.user;
     user = await  userModel.findOne({email:req.user.email});
-    let {email,vhcNo,name}= user;
-    return res.json({"status":200,"user":{email,vhcNo,name}});
+    let {email,vhcNo,name,ndos,serviceCenter,emission}= user;
+    return res.json({"status":200,"user":{email,vhcNo,name,ndos,serviceCenter,emission}});
 });
 
 

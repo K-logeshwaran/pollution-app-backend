@@ -33,10 +33,11 @@ router.get("/users",async (req,res)=>{
     //rto = await  rtoModel.findOne({email:req.user.email});
     let users = await userModel.find({})
     //let {rotName,rtoId,email}= rto;
-    console.log(users);
+    // console.log(users);
     let vals = users.map(e=>{
-        let {email,name} = e;
-        return {email,name};
+        console.log(e);
+        let {email,vhcNo} = e;
+        return {email,vhcNo};
     })
     return res.json({"status":200,vals});
 });
@@ -58,7 +59,7 @@ router.get("/user/:email",verifyToken,async (req,res)=>{
         name,
         address,
         phNo,
-        vhcNo} = user;
+        vhcNo,emission} = user;
     console.log({country,
         district,
         pincode,
@@ -69,6 +70,6 @@ router.get("/user/:email",verifyToken,async (req,res)=>{
         address,
         phNo,
         vhcNo});
-    return res.json({"status":200,data:{address,email,name,phNo,vhcNo}});
+    return res.json({"status":200,data:{address,email,name,phNo,vhcNo,emission}});
 });
 module.exports = router;

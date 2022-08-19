@@ -28,7 +28,8 @@ const USER =  new Schema({
     },
     vhcNo:{
         type:String,
-        required:true
+        required:true,
+        unique: true
     },
     district:{
         type:String,
@@ -45,6 +46,16 @@ const USER =  new Schema({
     pincode:{
         type:String,
         required:true
+    },
+    serviceCenter:{
+        type:String,
+        required:true,
+        default:"Not Updated yet"
+    },
+    ndos:{
+        type:String,
+        require:true,
+        default:"Not Updated yet"
     },
     emission:{
         required:true,

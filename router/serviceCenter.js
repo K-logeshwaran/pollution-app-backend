@@ -6,6 +6,7 @@ const {AddServiceCenter} = require("../db")
 const File = require("../schema/file");
 const verifyToken = require("../middleware/token");
 const sercenSchema = require("../schema/serviceCenter.model");
+const userModel = require("../schema/user.model");
 
 const upload = multer({dest:"uploads"});
 
@@ -34,15 +35,25 @@ router.post("/",async (req,res)=>{
     return res.json({"status":200,"message":result});
 });
 
-router.post("/file",upload.single("file"),async (req,res)=>{
-    console.log(req.body)
+router.post("/file",upload.single("file"),verifyToken,async (req,res)=>{
+    console.log("BODY");
+    console.log(req.user);
+    console.log(req.body);
     console.log(req.file);
     let send  = await File.create({
         filename: req.file.originalname,
         path:req.file.path,
-    })
+    });
     console.log(send);
     console.log(`${req.headers.origin}/file/${send._id}`);
+    let user = await userModel.findOne({vhcNo:req.body.vhcno})
+    let sercen = await sercenSchema.findOne({email:req.user.email})
+
+    console.log(user);
+    user.ndos=req.body.ndos;
+    user.serviceCenter=sercen.serCenName
+    await user.save();
+
     return res.send('<a href="http://localhost:8000/serviceCenterView"> Success click to go home </a>');
 });
 
