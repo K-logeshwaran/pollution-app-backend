@@ -36,8 +36,8 @@ router.get("/users",async (req,res)=>{
     // console.log(users);
     let vals = users.map(e=>{
         console.log(e);
-        let {email,vhcNo} = e;
-        return {email,vhcNo};
+        let {email,vhcNo,emission} = e;
+        return {email,vhcNo,emission};
     })
     return res.json({"status":200,vals});
 });
@@ -71,5 +71,13 @@ router.get("/user/:email",verifyToken,async (req,res)=>{
         phNo,
         vhcNo});
     return res.json({"status":200,data:{address,email,name,phNo,vhcNo,emission}});
+});
+
+router.post("/fine",verifyToken,async (req,res)=>{
+    console.log(req.body);
+    let user = await userModel.findOne({email:req.body.to});
+    user.fine+=req.body.fine 
+    await user.save();
+    res.send("ok")
 });
 module.exports = router;

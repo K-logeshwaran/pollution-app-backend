@@ -61,6 +61,11 @@ const USER =  new Schema({
         required:true,
         type:Number,
         default:0
+    },
+    fine:{
+        require:true,
+        type:Number,
+        default:0
     }
 })
 
